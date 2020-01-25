@@ -44,6 +44,21 @@ void setup()
     lcd.printStr(3, 3, "Hello World");
 }
 
+uint8_t x = 0, y = 0, contrast = 0;
+uint8_t frameCounter = 0;
 void loop()
 {
+    lcd.clrScr();
+    lcd.printStr(3, 1, "Hello World");
+    frameCounter++;
+    if(frameCounter>1){
+        frameCounter = 0;
+        lcd.printStr(3, 3, "DOOD");
+    }
+
+//    lcd.setContrast(contrast);
+//    if(contrast>=31) contrast=0;
+//    if(x>80) x=0;
+//    if(y>5) y=0;
+    delay(10);
 }
