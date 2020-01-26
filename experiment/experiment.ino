@@ -63,24 +63,60 @@ void sample(int s)
 }
 
 uint8_t frameCounter = 0;
-float x=22, y=33;
-float dx = -0.3, dy = -0.3;
+float xC=22, yC=33;
+float dxC = -0.3, dyC = -0.1;
+
+float x1R=5,  y1R=5;
+float x2R=50, y2R=20;
+float x3R=10, y3R=50;
+float dx1R = -0.3, dy1R = -0.1;
+float dx2R = -0.2, dy2R = -0.2;
+float dx3R = -0.1, dy3R = -0.3;
+
+void moveCircle(float *x, float *y, float *dx, float *dy){
+    if(*x <= 16 || *x >= SCR_WD-16) *dx=-*dx;
+    if(*y <= 16 || *y >= SCR_HT-16) *dy=-*dy;
+    *x += *dx;
+    *y += *dy;
+}
+
+void moveRectVertex(float *x, float *y, float *dx, float *dy){
+    if(*x <= 0 || *x >= SCR_WD) *dx=-*dx;
+    if(*y <= 0 || *y >= SCR_HT) *dy=-*dy;
+    *x += *dx;
+    *y += *dy;
+}
+
+
 void loop()
 {
     lcd.cls();
+    lcd.setDither(8);
     frameCounter++;
     if(frameCounter%2){
         lcd.setDither(8);
     } else {
         lcd.setDither(-8);
     }
-    lcd.fillTriangleD(0,0,80,20,50,60,1);
-    if( x<=20 || x>=SCR_WD-20 ) dx=-dx;
-    if( y<=20 || y>=SCR_HT-20 ) dy=-dy;
-    x+=dx;
-    y+=dy;
-    lcd.fillCircle(x,y,15,1);
+    lcd.drawLineVfastD(0,0,50,1);
+    lcd.drawLineVfastD(1,0,50,1);
+    lcd.drawLineVfastD(2,0,50,1);
+    lcd.drawLineHfastD(0,50,0,1);
+    lcd.drawLineHfastD(0,50,1,1);
+    lcd.drawLineHfastD(0,50,2,1);
+//    lcd.drawLineHfast(0,SCR_WD-1,1,1);
+//    lcd.drawLineHfastD(0,SCR_WD-1,2,1);
+//    lcd.fillRectD(4,4,20,1,1);
 
+    moveRectVertex(&x1R,&y1R,&dx1R,&dy1R);
+    moveRectVertex(&x2R,&y2R,&dx2R,&dy2R);
+    moveRectVertex(&x3R,&y3R,&dx3R,&dy3R);
+    lcd.fillTriangle(x2R,y2R,x3R,y3R,x1R,y1R,1);
+    lcd.fillTriangleD(x1R,y1R,7,7,x2R,y2R,1);
+
+
+    moveCircle(&xC, &yC, &dxC, &dyC);
+    lcd.fillCircle(xC, yC, 13, 1);
     lcd.display();
 //    for(int i=0;i<=16;i++){
 //        lcd.cls();
