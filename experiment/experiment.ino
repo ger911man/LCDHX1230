@@ -9,7 +9,7 @@
   #4 DIN - D11/MOSI
   #5 CLK - D13/SCK
   #6 VCC - 3V3
-  #7 BL  - 3V3 or any digital
+  #7 BL  - 3V3 or any digital (BackLight)
   #8 GND - GND
 */
 
