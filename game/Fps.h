@@ -5,16 +5,18 @@
 #ifndef FPS_H
 #define FPS_H
 
-#include "../HX1230_FB.h"
+#include "HX1230_FB.h"
 
 #define FPS_DISPLAY_RATE 1000   //ms
+#define FPS_X_POS 2
+#define FPS_Y_POS 1
 
 class Fps {
 public:
     Fps(HX1230_FB* lcd);
     void draw();
 private:
-    char buf[4];
+    char buf[8];
     uint32_t  prevFpsTime = 0;
     uint32_t  fpsCounter = 0;
     uint32_t  fps = 0;

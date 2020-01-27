@@ -20,5 +20,5 @@ void Fps::draw() {
         fpsCounter = 0;
     }
     snprintf(buf, sizeof(buf),"FPS:%d",fps);
-    lcd->printStr(2,1,buf);
+    lcd->printStr(FPS_X_POS,FPS_Y_POS,buf);
 }
