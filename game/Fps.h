@@ -13,7 +13,7 @@
 
 class Fps {
 public:
-    Fps(HX1230_FB* lcd);
+    explicit Fps(HX1230_FB* lcd);
     void draw();
 private:
     char buf[8];

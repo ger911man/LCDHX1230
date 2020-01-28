@@ -15,7 +15,7 @@ BackgroungHills backgroungHills = BackgroungHills(BACKGROUND_X0, BACKGROUND_Y0, 
 
 // vars
 uint32_t frameCounter = 0;
-float f = 0;
+float f = 4.5;
 
 void setup()
 {
@@ -37,7 +37,7 @@ void setup()
 
 float xC=22, yC=33, rC=15;
 float speedXC = -0.015, speedYC = -0.010; //speed: pixels/sec/1000
-float backgroundSpeed = 0.010;
+float backgroundSpeed = 0.003;
 
 
 void moveRectVertex(float *x, float *y, float *dx, float *dy){
@@ -71,9 +71,11 @@ void loop()
     }
 
     // ----------------------------------------- DRAWING -----------------------------------------
-    if(frameCounter %2 == 0){
-        backgroungHills.displayMountainsShiftedBy(backgroundSpeed*timer.getTimer());
-    }
+//    if(frameCounter %2 == 0){
+//        backgroungHills.displayMountainsShiftedBy(backgroundSpeed*timer.getTimer());
+//    }
+    backgroungHills.displayMountainsShiftedBy(backgroundSpeed*timer.getTimer());
+
     drawFrame();
 
 
@@ -81,10 +83,12 @@ void loop()
     yC+=timer.getTimer()*speedYC;
     if(xC <= rC){
         speedXC=-speedXC;
+        backgroundSpeed=-backgroundSpeed;
         xC=rC*2-xC;
     }
     if(xC >= LCD_NOKIA_WIDTH-rC){
         speedXC=-speedXC;
+        backgroundSpeed=-backgroundSpeed;
         xC=(LCD_NOKIA_WIDTH-rC)*2-xC;
     }
     if(yC <= rC){
@@ -95,7 +99,8 @@ void loop()
         speedYC=-speedYC;
         yC= (LCD_NOKIA_HEIGHT-rC)*2-yC;
     }
-    lcd.fillCircle(xC, yC, rC, 1);
+    lcd.fillCircleD(xC, yC, rC, 1);
+    lcd.fillCircle(xC, yC, rC-5, 1);
 
 
     //FPS draw
