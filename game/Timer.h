@@ -5,18 +5,17 @@
 #ifndef TIMER_H
 #define TIMER_H
 
-#include "Arduino.h"
+#include "Globals.h"
 
 class Timer {
 public:
     Timer();
-    uint32_t getTimer();
+    //uint32_t getTimer();
     void resetFrameTimer();
 
 private:
     uint32_t  currTime = 0;
     uint32_t  prevTime = 0;
-    uint32_t  deltaTime = 0;
 };
 
 

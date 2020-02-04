@@ -3,8 +3,6 @@
 
 #include "HX1230_FB.h"
 
-#define MOUNTAINS_QUANTITY 3
-
 class BackgroungHills {
 
 public:
@@ -27,8 +25,10 @@ private:
     HX1230_FB* lcd;
     uint8_t *horizonArray;
     uint8_t horizonArraySize;
+    boolean isUphill = true;
+    uint8_t nextMountainTop = 3;
     uint8_t mountainMaxHeight;
     uint8_t mountainMinHeight;
 };
 
-#endif //BACKGROUNGHILLS_H
+#endif //KITCHEN_LIGHTS_BACKGROUNGHILLS_H

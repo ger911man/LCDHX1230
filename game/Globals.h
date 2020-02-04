@@ -20,15 +20,23 @@
 #else
 #endif
 
+#include "Sprites.h"
+
 // ----------------------------------------- CONSTS -----------------------------------------
 //#define LCD_CONTRAST 40
 #define LCD_NOKIA_WIDTH 95                // 0..95
 #define LCD_NOKIA_HEIGHT 67               // 0..67
 #define GAME_SPEED_DELAY 50
 #define BACKGROUND_X0 2
-#define BACKGROUND_Y0 0
+#define BACKGROUND_Y0 10
 #define BACKGROUND_X1 93
 #define BACKGROUND_Y1 30
+//physics
+#define GRAVITY_VELOCITY 0.2
+#define BRAKING_VELOCITY 0.05
+#define THROTTLE_VELOCITY 0.3
+#define JUMP_IMPULSE_SPEED -1.75
+
 
 // ----------------------------------------- PINOUTS -----------------------------------------
 #define PIN_LCD_RST 6

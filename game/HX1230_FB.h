@@ -113,6 +113,8 @@ public:
   void setDither(int8_t s);
   int drawBitmap(const uint8_t *bmp, int x, uint8_t y, uint8_t w, uint8_t h);
   int drawBitmap(const uint8_t *bmp, int x, uint8_t y);
+  void drawSprite(const uint8_t *bmp, int8_t x, int8_t y, int8_t w, int8_t h);
+  void drawSprite(const uint8_t *bmp, int8_t x, int8_t y);
 
   void setFont(const uint8_t* f);
   void setCR(uint8_t _cr) { cr = _cr; }

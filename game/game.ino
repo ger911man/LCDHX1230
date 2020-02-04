@@ -6,15 +6,21 @@
 #include "Fps.h"
 #include "Timer.h"
 #include "BackgroungHills.h"
+#include "Dood.h"
 
 // objects
 HX1230_FB lcd(PIN_LCD_RST, PIN_LCD_CS);
 Fps fps = Fps(&lcd);
 Timer timer = Timer();
-BackgroungHills backgroungHills = BackgroungHills(BACKGROUND_X0, BACKGROUND_Y0, BACKGROUND_X1, BACKGROUND_Y1, &lcd);
+//BackgroungHills backgroungHills = BackgroungHills(BACKGROUND_X0, BACKGROUND_Y0, BACKGROUND_X1, BACKGROUND_Y1, &lcd);
+BackgroungHills backgroungHills2 = BackgroungHills(BACKGROUND_X0, 10, BACKGROUND_X1, 20, &lcd);
+BackgroungHills backgroungHills3 = BackgroungHills(BACKGROUND_X0, 5, BACKGROUND_X1, 25, &lcd);
+BackgroungHills backgroungHills4 = BackgroungHills(BACKGROUND_X0, 0, BACKGROUND_X1, 30, &lcd);
+Dood dood = Dood(10,30,&lcd);
 
 // vars
 uint32_t frameCounter = 0;
+uint32_t deltaTime = 0;
 float f = 4.5;
 
 void setup()
@@ -24,7 +30,7 @@ void setup()
     pinMode(PIN_BUTTON_UP, INPUT_PULLUP);
     pinMode(PIN_SPEAKER, OUTPUT);
 
-    Serial.begin(115200);
+//    Serial.begin(115200);
 
     lcd.init();
     lcd.cls();
@@ -36,15 +42,32 @@ void setup()
 
 
 float xC=22, yC=33, rC=15;
+float xm=62, ym=13;
+
 float speedXC = -0.015, speedYC = -0.010; //speed: pixels/sec/1000
+float speedXm = -0.015, speedYm = -0.010; //speed: pixels/sec/1000
 float backgroundSpeed = 0.003;
 
 
-void moveRectVertex(float *x, float *y, float *dx, float *dy){
-    if(*x <= 0 || *x >= LCD_NOKIA_WIDTH) *dx=-*dx;
-    if(*y <= 0 || *y >= LCD_NOKIA_HEIGHT) *dy=-*dy;
-    *x += *dx;
-    *y += *dy;
+void moveVertex(float *x, float *y, float *dx, float *dy){
+    *x+=deltaTime* *dx;
+    *y+=deltaTime* *dy;
+    if(*x <= 0){
+        *dx=-*dx;
+        *x=-*x;
+    }
+    if(*x >= LCD_NOKIA_WIDTH){
+        *dx=-*dx;
+        *x=LCD_NOKIA_WIDTH*2-*x;
+    }
+    if(*y <= 0){
+        *dy=-*dy;
+        *y=-*y;
+    }
+    if(*y >= LCD_NOKIA_HEIGHT){
+        *dy=-*dy;
+        *y=LCD_NOKIA_HEIGHT*2-*y;
+    }
 }
 
 void drawFrame(){
@@ -64,23 +87,29 @@ void loop()
     lcd.cls();
 
     frameCounter++;
+    moveVertex(&xm, &ym, &speedXm, &speedYm);
     if(frameCounter%2){
         lcd.setDither(8);
+        lcd.drawSprite(biker1,xm-10,ym-10);
     } else {
         lcd.setDither(-8);
+        lcd.drawSprite(biker2,xm-10,ym-10);
     }
 
     // ----------------------------------------- DRAWING -----------------------------------------
 //    if(frameCounter %2 == 0){
 //        backgroungHills.displayMountainsShiftedBy(backgroundSpeed*timer.getTimer());
 //    }
-    backgroungHills.displayMountainsShiftedBy(backgroundSpeed*timer.getTimer());
-
+//    backgroungHills.displayMountainsShiftedBy(backgroundSpeed*deltaTime);
+    backgroungHills2.displayMountainsShiftedBy(0.005*deltaTime);
+    backgroungHills3.displayMountainsShiftedBy(0.010*deltaTime);
+    backgroungHills4.displayMountainsShiftedBy(0.015*deltaTime);
+//    dood.display();
     drawFrame();
 
 
-    xC+=timer.getTimer()*speedXC;
-    yC+=timer.getTimer()*speedYC;
+    xC+=deltaTime*speedXC;
+    yC+=deltaTime*speedYC;
     if(xC <= rC){
         speedXC=-speedXC;
         backgroundSpeed=-backgroundSpeed;
@@ -100,7 +129,9 @@ void loop()
         yC= (LCD_NOKIA_HEIGHT-rC)*2-yC;
     }
     lcd.fillCircleD(xC, yC, rC, 1);
-    lcd.fillCircle(xC, yC, rC-5, 1);
+    lcd.fillCircle(xC, yC, rC-10, 1);
+
+
 
 
     //FPS draw
@@ -108,7 +139,7 @@ void loop()
 
 
     // ----------------------------------------- FINAL -----------------------------------------
-    f+=timer.getTimer()/10000.0;
+    f+=deltaTime/5000.0;
     delay((sin(f)+1)*50);
     lcd.display();
 }

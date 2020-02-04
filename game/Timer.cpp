@@ -17,6 +17,6 @@ void Timer::resetFrameTimer() {
     prevTime = currTime;
 }
 
-uint32_t Timer::getTimer() {
-    return deltaTime;
-}
+//uint32_t Timer::getTimer() {
+//    return deltaTime;
+//}
