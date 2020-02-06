@@ -663,16 +663,13 @@ int HX1230_FB::drawBitmap(const uint8_t *bmp, int x, uint8_t y)
     return drawBitmap(bmp+2, x, y, w, h);
 }
 // ----------------------------------------------------------------
-// extended bitmap draw
+// extended bitmap draw ~(10%faster)
 // ----------------------------------------------------------------
-// ----------------------------------------------------------------
-// extended bitmap draw
-// ----------------------------------------------------------------
-void HX1230_FB::drawSprite(const uint8_t *bmp, int8_t x, int8_t y, int8_t w, int8_t h)
-{
+void HX1230_FB::drawSprite(const uint8_t *bmp, int8_t x, int8_t y, uint8_t w, uint8_t h){
     uint16_t screenByteIndex=0;
     uint8_t screenXStartBit=x, screenYStartBit=y;
-    uint8_t spriteXStartBit=0, spriteYStartBit=0, spriteSegmentW, spriteW=abs(w), spriteH=h, spriteByte, spriteFirstByteShift=0, spriteLastByteShift=0;
+    uint8_t spriteXStartBit=0, spriteYStartBit=0, spriteSegmentW, spriteW=w, spriteH=h, spriteByte, spriteFirstByteShift=0, spriteLastByteShift=0;
+    uint8_t bitFirst=0, bitLast=0;
     //Draw sprite if at least a part of it is on screen
     spriteSegmentW=spriteW;
     if(x+spriteW>0 && y+h>0 && x<SCR_WD && y<SCR_HT) {
@@ -693,11 +690,7 @@ void HX1230_FB::drawSprite(const uint8_t *bmp, int8_t x, int8_t y, int8_t w, int
         spriteLastByteShift = spriteH + spriteYStartBit - y8end * 8;
         for (uint8_t y8 = y8start; y8 <= y8end; y8++) {
             for (uint8_t ix = spriteXStartBit; ix < spriteXStartBit + spriteSegmentW; ix++) {
-//                spriteByte =  bmp[spriteW * y8 + ix];
-//                d = pgm_read_byte(bmp+wdb*y8+i);
                 spriteByte = pgm_read_byte(bmp + spriteW * y8 + ix);
-
-                uint8_t bitFirst=0, bitLast=0;
                 if(y8 == y8start && y8 == y8end){
                     spriteByte >>= spriteFirstByteShift;
                     bitFirst=spriteFirstByteShift;
@@ -706,17 +699,17 @@ void HX1230_FB::drawSprite(const uint8_t *bmp, int8_t x, int8_t y, int8_t w, int
                     spriteByte >>= spriteFirstByteShift;
                     bitFirst=spriteFirstByteShift;
                     bitLast=8;
-                } else if (y8 != y8end) {
-                    bitFirst=0;
-                    bitLast=8;
-                } else {
+                } else if (y8 == y8end) {
                     bitFirst=0;
                     bitLast=spriteLastByteShift;
+                } else {
+                    bitFirst=0;
+                    bitLast=8;
                 }
                 for (uint8_t bit = bitFirst; bit < bitLast; bit++) {
                     if (spriteByte & 1) {
                         uint8_t scrX = screenXStartBit + ix - spriteXStartBit;
-                        uint8_t scrY = (screenYStartBit + y8 * 8 + bit - spriteYStartBit);
+                        uint8_t scrY = (screenYStartBit + (y8<<3) + bit - spriteYStartBit);
                         screenByteIndex = scrY / 8 * SCR_WD + scrX;
                         scr[screenByteIndex] |= (1 << (scrY & 7)); //scrY%8
                     }
@@ -726,35 +719,73 @@ void HX1230_FB::drawSprite(const uint8_t *bmp, int8_t x, int8_t y, int8_t w, int
         }
     }
 }
-//void HX1230_FB::drawSprite(const uint8_t *bmp, int x, uint8_t y, uint8_t w, uint8_t h)
-//{
-//    uint16_t bufferPosition;
-//    uint8_t wdb = w;
-//    ALIGNMENT;
-//    byte i,y8,d,b,ht8=(h+7)/8;
-//    for(y8=0; y8<ht8; y8++) {
-//        for(i=0; i<w; i++) {
-//            d = pgm_read_byte(bmp+wdb*y8+i);
-//            int lastbit = h - y8 * 8;
-//            if (lastbit > 8) lastbit = 8;
-//            for(b=0; b<lastbit; b++) {
-////                if(d & 1) scr[((y+y8*8+b)/8)*scrWd+x+i] |= (1 << ((y+y8*8+b)&7));
-//                if(d & 1) {
-//                    bufferPosition = ((y+y8*8+b)/8)*scrWd+x+i;
-//                    scr[bufferPosition] |= (1 << ((y+y8*8+b)&7));
-//                }
-//                d>>=1;
-//            }
-//        }
-//    }
-//
-//}
-// ----------------------------------------------------------------
 void HX1230_FB::drawSprite(const uint8_t *bmp, int8_t x, int8_t y)
 {
     uint8_t w = pgm_read_byte(bmp+0);
     uint8_t h = pgm_read_byte(bmp+1);
     drawSprite(bmp+2, x, y, w, h);
+}
+void HX1230_FB::drawSpriteMirror(const uint8_t *bmp, int8_t x, int8_t y, uint8_t w, uint8_t h){
+    uint16_t screenByteIndex=0;
+    uint8_t screenXStartBit=x, screenYStartBit=y;
+    uint8_t spriteXStartBit=0, spriteYStartBit=0, spriteSegmentW, spriteW=w, spriteH=h, spriteByte, spriteFirstByteShift=0, spriteLastByteShift=0;
+    uint8_t bitFirst=0, bitLast=0;
+    //Draw sprite if at least a part of it is on screen
+    spriteSegmentW=spriteW;
+    if(x+spriteW>0 && y+h>0 && x<SCR_WD && y<SCR_HT) {
+        if (x < 0) {
+            screenXStartBit = 0;
+            spriteSegmentW += x;
+        }
+        if (y < 0) {
+            screenYStartBit = 0;
+            spriteYStartBit = -y;
+            spriteH -= spriteYStartBit;
+        }
+        if (x + spriteW > SCR_WD) {
+            spriteXStartBit = x + spriteW - SCR_WD;
+            spriteSegmentW -= spriteXStartBit;
+        }
+        if (y + h > SCR_HT) spriteH -= y + h - SCR_HT;
+        uint8_t y8start = spriteYStartBit / 8, y8end = (spriteYStartBit + spriteH - 1) / 8;
+        spriteFirstByteShift = spriteYStartBit % 8;
+        spriteLastByteShift = spriteH + spriteYStartBit - y8end * 8;
+        for (uint8_t y8 = y8start; y8 <= y8end; y8++) {
+            for (uint8_t ix = spriteXStartBit; ix < spriteXStartBit + spriteSegmentW; ix++) {
+                spriteByte = pgm_read_byte(bmp + spriteW * y8 + ix);
+                if(y8 == y8start && y8 == y8end){
+                    spriteByte >>= spriteFirstByteShift;
+                    bitFirst=spriteFirstByteShift;
+                    bitLast=spriteLastByteShift;
+                } else if(y8 == y8start && spriteFirstByteShift != 0) {
+                    spriteByte >>= spriteFirstByteShift;
+                    bitFirst=spriteFirstByteShift;
+                    bitLast=8;
+                } else if (y8 == y8end) {
+                    bitFirst=0;
+                    bitLast=spriteLastByteShift;
+                } else {
+                    bitFirst=0;
+                    bitLast=8;
+                }
+                for (uint8_t bit = bitFirst; bit < bitLast; bit++) {
+                    if (spriteByte & 1) {
+                        uint8_t scrX = screenXStartBit + spriteSegmentW - 1 - ix + spriteXStartBit;
+                        uint8_t scrY = (screenYStartBit + (y8 << 3) + bit - spriteYStartBit);
+                        screenByteIndex = scrY / 8 * SCR_WD + scrX;
+                        scr[screenByteIndex] |= (1 << (scrY & 7)); //scrY%8
+                    }
+                    spriteByte >>= 1;
+                }
+            }
+        }
+    }
+}
+void HX1230_FB::drawSpriteMirror(const uint8_t *bmp, int8_t x, int8_t y)
+{
+    uint8_t w = pgm_read_byte(bmp+0);
+    uint8_t h = pgm_read_byte(bmp+1);
+    drawSpriteMirror(bmp + 2, x, y, w, h);
 }
 // ----------------------------------------------------------------
 // text rendering
