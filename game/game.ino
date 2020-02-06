@@ -91,7 +91,7 @@ void bikerTest(){
     for(int i=0; i< ARR; i++){
         arr[i]+=0.05+i*0.009;
         if(arr[i]>96) arr[i]=-16;
-        lcd.drawSprite(biker1,arr[i],25+i*2);
+        lcd.drawSprite(platform,arr[i],25+i*2);
     }
 }
 
@@ -114,8 +114,8 @@ void loop()
     backgroungHills2.displayMountainsShiftedBy(0.005*deltaTime);
     backgroungHills3.displayMountainsShiftedBy(0.010*deltaTime);
     backgroungHills4.displayMountainsShiftedBy(0.015*deltaTime);
-//    for(int i=0;i<50;i++) lcd.drawSprite(biker1 , xC, yC );
-//    for(int i=0;i<50;i++) lcd.drawSpriteMirror(biker2 , xM1, yM1);
+    lcd.drawSprite(biker1 , xC, yC );
+    lcd.drawSpriteMirror(biker2 , xM1, yM1);
 //    dood.display();
 
 

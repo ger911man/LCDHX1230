@@ -1,6 +1,9 @@
 /*************************************************
  * Public Constants
  *
+ * ****************
+ *   LCD pinouts
+ * ****************
  * HX1230 96x68 LCD connections:
  * #1 RST - D6 or any digital
  * #2 CE  - D7 or any digital
@@ -10,6 +13,11 @@
  * #6 VCC - 3V3
  * #7 BL  - 3V3 or any digital + resistor (BackLight)
  * #8 GND - GND
+ *
+ * ****************
+ *  BUTTONS
+ * ****************
+ *
 **************************************************/
 
 #ifndef _GLOBALS_H
