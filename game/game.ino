@@ -7,23 +7,33 @@
 #include "Timer.h"
 #include "BackgroungHills.h"
 #include "Dood.h"
+#include "Speaker.h"
+#include "Button.h"
+#include "Map.h"
+#include "Maps.h"
 
 // objects
 HX1230_FB lcd(PIN_LCD_RST, PIN_LCD_CS);
 Fps fps = Fps(&lcd);
 Timer timer = Timer();
-//BackgroungHills backgroungHills = BackgroungHills(BACKGROUND_X0, BACKGROUND_Y0, BACKGROUND_X1, BACKGROUND_Y1, &lcd);
+Speaker speaker = Speaker(PIN_SPEAKER);
+Button buttonLeft = Button(PIN_BUTTON_LEFT, &speaker);
+Button buttonRight = Button(PIN_BUTTON_RIGHT, &speaker);
+Button buttonUp = Button(PIN_BUTTON_UP, &speaker);
 BackgroungHills backgroungHills2 = BackgroungHills(BACKGROUND_X0, 10, BACKGROUND_X1, 20, &lcd);
 BackgroungHills backgroungHills3 = BackgroungHills(BACKGROUND_X0, 5, BACKGROUND_X1, 25, &lcd);
 BackgroungHills backgroungHills4 = BackgroungHills(BACKGROUND_X0, 0, BACKGROUND_X1, 30, &lcd);
-Dood dood = Dood(10,30,&lcd);
+Dood dood = Dood(10,30,&lcd,&speaker);
+Map lvlMap = Map(map0, &lcd);
 
 // vars
-uint32_t frameCounter = 0;
+uint16_t frameCounter = 0;
 uint32_t deltaTime = 0;
+float cameraPosition = 0;
+
+// tmp vars
 float f = 4.5;
-#define ARR 20
-float arr[ARR];
+uint8_t mel = 0;
 
 void setup()
 {
@@ -31,19 +41,11 @@ void setup()
     pinMode(PIN_BUTTON_RIGHT, INPUT_PULLUP);
     pinMode(PIN_BUTTON_UP, INPUT_PULLUP);
     pinMode(PIN_SPEAKER, OUTPUT);
-
 //    Serial.begin(115200);
-
     lcd.init();
     lcd.cls();
     lcd.setFont(Small5x6PL);
-
-    for(int i=0; i< ARR; i++){
-        arr[i]=random(95);
-    }
 }
-
-
 
 
 void moveVertex(float *x, float *y, float *dx, float *dy){
@@ -71,6 +73,20 @@ void moveVertex(float *x, float *y, float *dx, float *dy){
     }
 }
 
+void scrollMap(float *x, float *dx, const uint8_t *map){
+    *x+=deltaTime* *dx;
+    uint16_t x0 = (8-(pgm_read_byte(map + 1)%8))*8;
+    uint16_t x1 = pgm_read_byte(map + 1)*8-SCR_WD + x0;
+    if(*x <= x0){
+        *dx=-*dx;
+        *x=x0*2-*x;
+    }
+    if(*x >= x1){
+        *dx=-*dx;
+        *x=x1*2-*x;
+    }
+}
+
 void drawFrame(){
     lcd.drawLineHfast(0,LCD_NOKIA_WIDTH,0,1);
     lcd.drawLineHfast(0,LCD_NOKIA_WIDTH,LCD_NOKIA_HEIGHT,1);
@@ -83,17 +99,7 @@ float xC=22, yC=33;
 float speedXC = -0.015, speedYC = -0.010; //speed: pixels/sec/1000
 float xM1=22, yM1=33;
 float speedXm = 0.010, speedYm = 0.007;
-
-float backgroundSpeed = 0.003;
-
-
-void bikerTest(){
-    for(int i=0; i< ARR; i++){
-        arr[i]+=0.05+i*0.009;
-        if(arr[i]>96) arr[i]=-16;
-        lcd.drawSprite(platform,arr[i],25+i*2);
-    }
-}
+float speedMap = 0.007;
 
 
 void loop()
@@ -103,12 +109,36 @@ void loop()
     timer.resetFrameTimer();
     frameCounter++;
 //    Serial.println(timer.getTimer());
+
     if(frameCounter%2){
         lcd.setDither(8);
     } else {
         lcd.setDither(-8);
     }
-
+    // ----------------------------------------- BUTOON -----------------------------------------
+    if(buttonLeft.getState() != buttonRight.getState()){
+        if(buttonLeft.getPrevState()) dood.moveLeft();
+        if(buttonRight.getPrevState()) dood.moveRight();
+    } else {
+        dood.brake();
+    };
+    //first check ifHit
+    if(buttonUp.isHit()){
+        dood.doodJump();
+    }
+    //then getState, else - it won't work
+    if(buttonUp.getState()){
+        dood.doodLongJump();
+    } else {
+        dood.doodRegularJump();
+    }
+    // ----------------------------------------- SPEAKER -----------------------------------------
+    speaker.playMelody();
+    if(frameCounter%2000 == 0){
+        speaker.replaceCurrentlyPlayingNoteWith(400,100);
+        speaker.setMelodyByNumber(mel++);
+        if(mel > 5) mel = 0;
+    }
     // ----------------------------------------- DRAWING -----------------------------------------
     drawFrame();
     backgroungHills2.displayMountainsShiftedBy(0.005*deltaTime);
@@ -116,26 +146,28 @@ void loop()
     backgroungHills4.displayMountainsShiftedBy(0.015*deltaTime);
     lcd.drawSprite(biker1 , xC, yC );
     lcd.drawSpriteMirror(biker2 , xM1, yM1);
+    dood.display();
 //    dood.display();
 
 
+    lvlMap.drawMap(cameraPosition,sin(f*2)*8);
+    scrollMap(&cameraPosition, &speedMap, map0);
 
     moveVertex(&xC,&yC,&speedXC,&speedYC);
     moveVertex(&xM1,&yM1,&speedXm,&speedYm);
-
-    bikerTest();
-
 
 
 
 
     //FPS draw
     fps.draw();
+//    char buf[8];
+//    snprintf(buf, sizeof(buf),"UP:%d",buttonUp.getState());
+//    lcd.printStr(3,50,buf);
 
 
     // ----------------------------------------- FINAL -----------------------------------------
-//    f+=deltaTime/5000.0;
-//    delay((sin(f)+1)*50);
+    f+=deltaTime/2000.0;
+    delay((sin(f)+1)*30);
     lcd.display();
 }
-

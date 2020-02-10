@@ -2,166 +2,148 @@
 
 // Sprite
 const uint8_t PROGMEM spriteDood[6][32] = {
-        {B00000000,B11100000,
-                B00000001,B11110000,
-                B00000001,B11010000,
-                B00000001,B11110000,
-                B00000001,B11110000,
-                B00000011,B11100000,
-                B00000111,B11000000,
-                B00000111,B11000000,
-                B00000111,B11000000,
-                B00000111,B11000000,
-                B00000111,B11000000,
-                B00000011,B10000000,
-                B00000011,B10000000,
-                B00000011,B10000000,
-                B00000011,B10000000,
-                B00000011,B11000000
+        {
+            B00000000, B00000000,
+            B00000000, B00000000,
+            B00000000, B11000000,
+            B11100000, B11111110,
+            B11111111, B11111111,
+            B00111011, B00011110,
+            B00000000, B00000000,
+            B00000000, B00000000,
+            B00000000, B00000000,
+            B00000000, B00000000,
+            B00000000, B00000111,
+            B11111111, B11111111,
+            B11111111, B10000111,
+            B00000000, B00000000,
+            B00000000, B00000000,
+            B00000000, B00000000
         },
 
-        {B00000000,B11100000,
-                B00000001,B11110000,
-                B00000001,B11010000,
-                B00000001,B11110000,
-                B00000001,B11110000,
-                B00000011,B11100000,
-                B00000111,B11000000,
-                B00001111,B11100000,
-                B00011111,B11110000,
-                B00011111,B10111000,
-                B00001111,B11011000,
-                B00000111,B11100000,
-                B00001110,B11110000,
-                B00001100,B01100000,
-                B00011000,B11000000,
-                B00011110,B11110000
+        {
+            B00000000, B00000000,
+            B00000000, B00000000,
+            B10000000, B11000000,
+            B11100000, B11111110,
+            B11111111, B11111111,
+            B10111011, B00011110,
+            B00000000, B00000000,
+            B00000000, B00000000,
+            B00000000, B00000000,
+            B00000000, B11000011,
+            B11110111, B10111111,
+            B10011111, B00001111,
+            B11011111, B11111101,
+            B10111011, B10010111,
+            B00000110, B00000000,
+            B00000000, B00000000
         },
 
-        {B00000000,B00111000,
-                B00000000,B01111100,
-                B00000000,B01111100,
-                B00000000,B01110100,
-                B00000000,B01111100,
-                B00000001,B11111000,
-                B00000011,B11100000,
-                B00000111,B11101100,
-                B00011111,B11111000,
-                B00101111,B11100000,
-                B00001111,B11000000,
-                B00011111,B11100000,
-                B00011100,B11000000,
-                B00110001,B10000000,
-                B01100000,B11000000,
-                B00110000,B00000000
+        {
+            B00000000, B00000000,
+            B00000000, B00000000,
+            B00000000, B10000000,
+            B11000000, B11100000,
+            B11100000, B11111110,
+            B11111111, B00111111,
+            B10110111, B10011110,
+            B00000000, B00000000,
+            B00000000, B01000000,
+            B11100010, B10111001,
+            B00011111, B00011111,
+            B00001111, B00101111,
+            B01111111, B01011111,
+            B00001011, B00000001,
+            B00000001, B00000000,
+            B00000000, B00000000
         },
 
-        {B00000001,B11001100,
-                B00000011,B11101100,
-                B00000011,B11100110,
-                B00000011,B11110110,
-                B00111111,B01011110,
-                B01111111,B11111110,
-                B01100111,B11111100,
-                B00000011,B11100000,
-                B00000001,B11110000,
-                B00011001,B11111100,
-                B01111011,B11111110,
-                B00011111,B10011100,
-                B00001111,B00111000,
-                B00000110,B01110000,
-                B00000000,B00110000,
-                B00000000,B00011000
+        {
+            B00000000, B01100000,
+            B01110000, B00110000,
+            B00110000, B01110000,
+            B11111110, B11111111,
+            B11101111, B11111111,
+            B11101110, B01111000,
+            B01110011, B01111111,
+            B00111100, B00000000,
+            B00000000, B00000100,
+            B00000100, B00001110,
+            B00011110, B00111000,
+            B00111100, B00011111,
+            B00001111, B00100111,
+            B01110111, B11111111,
+            B10011110, B00001110,
+            B00000100, B00000000
         },
 
-        {B11001110,B00000000,
-                B11011111,B01100000,
-                B10011111,B01110000,
-                B11011010,B00110000,
-                B11111111,B01110000,
-                B01111111,B11100000,
-                B00111111,B11100000,
-                B00011111,B11000000,
-                B00001111,B11000000,
-                B00000111,B11000000,
-                B00000011,B11100000,
-                B00000011,B11110000,
-                B00000001,B11111011,
-                B00000111,B10111111,
-                B00000111,B00011110,
-                B00000110,B00001100
+        {
+            B00011111, B00111011,
+            B01110000, B11111110,
+            B11111111, B11110111,
+            B11111111, B11110110,
+            B11100000, B11110110,
+            B01111110, B00011100,
+            B00000000, B00000000,
+            B00000000, B00000000,
+            B00000000, B00000000,
+            B00000000, B00000000,
+            B00000001, B11100011,
+            B11101111, B01111111,
+            B00111111, B00011111,
+            B00111100, B01111000,
+            B11110000, B11100000,
+            B01110000, B00110000
         },
 
-        {B00000001,B11001100,
-                B00000011,B11101100,
-                B00000011,B11100110,
-                B00000011,B11110110,
-                B00111111,B01011110,
-                B01111111,B11111110,
-                B01110111,B11111100,
-                B00111111,B11100000,
-                B00011111,B11110000,
-                B00001111,B11111000,
-                B00000111,B11111110,
-                B01111111,B10011110,
-                B11111111,B00111110,
-                B01111110,B01111100,
-                B00110000,B00110000,
-                B00000000,B00011000
+        {   // TODO: not used sprite, modify or delete
+            B00000000, B01100000,
+            B11110000, B11110000,
+            B10110000, B11110000,
+            B11111110, B11111111,
+            B11101111, B11111111,
+            B11101110, B01111000,
+            B01110011, B01111111,
+            B00111100, B00000000,
+            B00010000, B00111000,
+            B01111000, B01111001,
+            B00111011, B00111111,
+            B00111111, B00011111,
+            B00001111, B00100111,
+            B01110111, B11111111,
+            B10111110, B00111100,
+            B00011100, B00000000
         }
 };
 
-const uint8_t icon4x4 [] PROGMEM = {4, 4,
-                                    B0110, B1001, B1001, B0110
-};
-const uint8_t icon8x8 [] PROGMEM = {8, 8,
-                                    B01111110, B11000011, B10100101, B10001001, B10010001, B10100101, B11000011, B01111110
-};
-
-const uint8_t icon18x18 [] PROGMEM = {34,11,
-                                      B11111111, B11011111, B00011111, B00000001, B00011111, B11011111, B11111111, B11111111, B11110111, B11110111, B11110111, B11110111, B11110111, B11110111, B11110111, B11110111, B11110111, B11110111, B11110111, B11110111, B11110111, B11110111, B11110111, B11110111, B11110111, B11000001, B11100011, B11100011, B11110111, B11110111, B11111111, B11111111, B11111111, B11111111,
-                                      B00000111, B00000111, B00000111, B00000100, B00000111, B00000111, B00000111, B00000111, B00000111, B00000111, B00000111, B00000111, B00000111, B00000111, B00000111, B00000111, B00000111, B00000111, B00000111, B00000111, B00000111, B00000111, B00000111, B00000111, B00000111, B00000111, B00000111, B00000111, B00000111, B00000111, B00000111, B00000111, B00000111, B00000111
-
-};
-
-const uint8_t icon24x24 [] PROGMEM = {24, 24,
-                                      B00000000, B00000000, B00000000, B00000000, B00000000, B00000000, B00000000, B00000000, B00000000, B00000000, B00000000, B00000000, B10000000, B10000000, B10000000, B11000000, B11100000, B11110000, B11110000, B11111000, B01111000, B01111100, B00111110, B00011110,
-                                      B00000000, B00000000, B00001100, B00011110, B00111110, B00111111, B01111111, B01111111, B01111111, B11111111, B11111111, B11111111, B11111111, B11111111, B11111111, B11111111, B00011111, B00000011, B00000001, B00000000, B00000000, B00000000, B00000000, B00000000,
-                                      B00110000, B01111000, B01111100, B11111100, B11101100, B01111110, B01111110, B00111111, B00001111, B00001111, B00001111, B00011111, B00011111, B00011111, B00001111, B00001111, B00001111, B00011111, B01111111, B01111110, B11101100, B11111100, B01111100, B00111000
-};
-
-const uint8_t test32x32 [] PROGMEM ={32, 32,
-                                      B00000000, B00000000, B00000000, B00000000, B00000000, B11100000, B11100000, B11110000, B11110000, B11110000, B11110000, B11111100, B01111100, B01111100, B00001100, B00001100, B00001100, B00001100, B00001100, B00001100, B00001100, B01110000, B01110000, B11110000, B11110000, B11100000, B11100000, B10000000, B00000000, B00000000, B00000000, B00000000,
-                                      B00000000, B00000000, B11111000, B11111000, B11000110, B11110111, B11110111, B11110111, B11110111, B11000111, B11000111, B00000001, B11111000, B11111000, B11111110, B11111110, B11111110, B11111110, B11111110, B11111110, B11111110, B11111000, B11111000, B00000001, B00000001, B00000111, B00000111, B11000111, B11111000, B11111000, B00000000, B00000000,
-                                      B00000000, B00000000, B00011111, B00011111, B01100011, B11101111, B11101111, B01101111, B01101111, B00010011, B00010011, B00010000, B11110000, B11110000, B00010011, B00010011, B00010011, B00010011, B11110011, B11110011, B00010011, B00010000, B00010000, B01100000, B01100000, B11101111, B11101111, B01111111, B00011111, B00011111, B00000000, B00000000,
-                                      B00000000, B00000000, B00000000, B00000000, B00000000, B00000111, B00000111, B00001000, B00001000, B00110000, B00110000, B00110000, B00110001, B00110001, B00110000, B00110000, B00110000, B00110000, B00110001, B00110001, B00110000, B00110000, B00110000, B00001000, B00001000, B00000111, B00000111, B00000000, B00000000, B00000000, B00000000, B00000000
-};
-
-
 //Constructor
-Dood::Dood(uint8_t x0, uint8_t y0, HX1230_FB* lcd){
+Dood::Dood(uint8_t x0, uint8_t y0, HX1230_FB* lcd, Speaker* speaker){
+//    uint8_t prevWalkSpriteChangeAtX = x0;
     coordinates0 =  Vector(x0, y0);
-    coordinates1 =  Vector(x0 + DOOD_SIZE_X, y0 + DOOD_SIZE_Y);
-    size = Vector(DOOD_SIZE_X, DOOD_SIZE_Y);
+    coordinates1 =  Vector(x0 + DOOD_WIDTH, y0 + DOOD_HEIGHT);
+    size = Vector(DOOD_WIDTH, DOOD_HEIGHT);
+    doodOrientation=FORWARD;
     this->lcd = lcd;
+    this->speaker = speaker;
 }
 
 void Dood::display(){
     counterDisplayed++;
 
     // ----------------------------------------- PHYSICS -----------------------------------------
-    speedModifier = deltaTime / 42.0; // if(deltaTime>42) deltaTime = 42;    // Game slowdown if low FPS. 24FPS: time delay between frames = 42 millis (1000/24=~42);
+//    speedModifier = deltaTime / 42.0;
     if(speed.getY() !=0){             // Because you can't move in X axis while jumping
         velocity.setX(0);
     }
-    speed+=velocity*speedModifier;
+    speed+=velocity*deltaTime;
     if(speed.getX() > DOOD_MAX_SPEED){
         speed.setX(DOOD_MAX_SPEED);
     }
-    if(speed.getX() < DOOD_MAX_SPEED * -1){
+    if(speed.getX() < -DOOD_MAX_SPEED){
         speed.setX(-DOOD_MAX_SPEED);
     }
-    coordinates0 += speed * speedModifier;
+    coordinates0 += speed * deltaTime;
     coordinates1 += size;
 
     // ----------------------------------------- Manage collisions -----------------------------------------
@@ -172,13 +154,13 @@ void Dood::display(){
         if(speed.getX() == 0){                              // not moving
             spriteNumber = 0;
         } else {                                            // moving
-            if(abs(prevRideSpriteChangeAtX - coordinates0.getX()) > 3){
+            if(abs(prevDoodSpriteChangeAtX - coordinates0.getX()) > 3){
                 if(spriteNumber == 0) {
                     spriteNumber = 1;
-                    prevRideSpriteChangeAtX = coordinates0.getX();
+                    prevDoodSpriteChangeAtX = coordinates0.getX();
                 } else {
                     spriteNumber = 0;
-                    prevRideSpriteChangeAtX = coordinates0.getX();
+                    prevDoodSpriteChangeAtX = coordinates0.getX();
                 }
             }
         }
@@ -188,29 +170,26 @@ void Dood::display(){
         } else {
             spriteNumber = 4;
         }
-        if(abs(speed.getY()) < 0.5){
+        if(abs(speed.getY()) < 0.01){
             spriteNumber = 3;
         }
     }
 
     // ----------------------------------------- Display -----------------------------------------
-//    lcd->drawBitmap(spriteDood[1],coordinates0.getX(), coordinates0.getY(), DOOD_SIZE_X, DOOD_SIZE_Y);
-    lcd->drawBitmap(icon4x4, 5 , 40);
-    lcd->drawBitmap(icon8x8, 5 , 50);
-    lcd->drawBitmap(icon18x18, 5 , 10);
-    lcd->drawBitmap(test32x32, 80 , 40);
-    if(counterDisplayed%2) {
-        lcd->drawBitmap(biker1, 20, 40);
-    }else{
-        lcd->drawBitmap(biker2, 20, 40);
+    if(doodOrientation == FORWARD) {
+        lcd->drawSprite(spriteDood[spriteNumber], coordinates0.getX(), coordinates0.getY(), DOOD_WIDTH, DOOD_HEIGHT);
     }
-    lcd->drawBitmap(icon24x24, 60, 40);
-
-
+    if(doodOrientation == BACKWARD) {
+        lcd->drawSpriteMirror(spriteDood[spriteNumber], coordinates0.getX(), coordinates0.getY(), DOOD_WIDTH, DOOD_HEIGHT);
+    }
+    for(int i=0;i<6;i++){
+        lcd->drawSprite(spriteDood[i], i * 16, 20, DOOD_WIDTH, DOOD_HEIGHT);
+    }
 }
 
 void Dood::doodJump(){
     if(speed.getY() == 0){
+        speaker->soundJump();
         speed.setY(JUMP_IMPULSE_SPEED);
         velocity.setY(GRAVITY_VELOCITY);
     }
@@ -231,15 +210,17 @@ void Dood::doodRegularJump(){
 
 void Dood::moveRight(){
     velocity.setX( THROTTLE_VELOCITY);
+    doodOrientation = FORWARD;
 }
 
 void Dood::moveLeft(){
     velocity.setX(-THROTTLE_VELOCITY);
+    doodOrientation = BACKWARD;
 }
 
 void Dood::brake(){
     if(speed.getX() != 0){
-        if(abs(speed.getX()) <= BRAKING_VELOCITY*speedModifier){
+        if(abs(speed.getX()) <= BRAKING_VELOCITY*deltaTime){
             speed.setX(0);
             velocity.setX(0);
         } else {
@@ -281,8 +262,8 @@ void Dood::setVelocityVector(float x, float y){
 }
 
 void Dood::doodStayOnSurface(){
-    if(coordinates0.getX() > LCD_NOKIA_WIDTH - DOOD_SIZE_X) {
-        coordinates0.setX(LCD_NOKIA_WIDTH - DOOD_SIZE_X);
+    if(coordinates0.getX() > LCD_NOKIA_WIDTH - DOOD_WIDTH) {
+        coordinates0.setX(LCD_NOKIA_WIDTH - DOOD_WIDTH);
         speed.setX(0);
         velocity.setX(0);
     }
@@ -291,13 +272,15 @@ void Dood::doodStayOnSurface(){
         speed.setX(0);
         velocity.setX(0);
     }
-    if(coordinates0.getY() > LCD_NOKIA_HEIGHT - DOOD_SIZE_Y){
-        coordinates0.setY(LCD_NOKIA_HEIGHT - DOOD_SIZE_Y - 1);
+    if(coordinates0.getY() > LCD_NOKIA_HEIGHT - DOOD_HEIGHT){
+        coordinates0.setY(LCD_NOKIA_HEIGHT - DOOD_HEIGHT - 1);
         speed.setY(0);
         velocity.setY(0);
+        speaker->soundLand();
     }
     if(coordinates0.getY() < 0){
         coordinates0.setY(0);
         speed.invertY();
+        speaker->soundLand();
     }
 }
